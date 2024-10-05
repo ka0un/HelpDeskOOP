@@ -31,4 +31,14 @@
     <url-pattern>/DBConnectionTestServlet</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>UserControllerServlet</servlet-name>
+    <servlet-class>project.core.servlet.UserControllerServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>UserControllerServlet</servlet-name>
+    <url-pattern>/UserControllerServlet</url-pattern>
+  </servlet-mapping>
+
 </web-app>

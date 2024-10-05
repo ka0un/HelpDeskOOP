@@ -87,7 +87,7 @@
   <div class="left-half">
     <div class="signup-container">
       <h2>Create Account</h2>
-      <form action="userControllerServlet" method="POST">
+      <form action="/UserControllerServlet" method="POST">
         <input type="hidden" name="command" value="CREATE_ACCOUNT">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>

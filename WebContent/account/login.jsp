@@ -83,7 +83,7 @@
                 <img src="../img/login.png" alt="HelpDesk Logo">
             </div>
             <h2>HelpDesk Login</h2>
-            <form action="userControllerServlet" method="POST">
+            <form action="/UserControllerServlet" method="POST">
 
                 <input type="hidden" name="command" value="CHECK">
                 <div class="mb-3">
