@@ -1,4 +1,6 @@
-package project;
+package project.core.servlet;
+
+import project.core.util.DbUtils;
 
 import java.io.IOException;
 
@@ -17,7 +19,7 @@ import javax.sql.DataSource;
 public class userControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private userDbUtil theUserDbUtil;
+	private DbUtils theUserDbUtil;
 	
 	@Resource(name="jdbc/helpdeskDB") private DataSource datasource;
 	
@@ -27,7 +29,7 @@ public class userControllerServlet extends HttpServlet {
 		super.init();
 		
 		try {
-			theUserDbUtil = new userDbUtil(datasource);
+			theUserDbUtil = new DbUtils(datasource);
 			
 		}
 		catch(Exception e) {

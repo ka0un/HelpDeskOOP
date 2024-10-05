@@ -1,4 +1,6 @@
-package project;
+package project.core.servlet;
+
+import project.core.util.DbUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,19 +10,18 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-@WebServlet("/DBConnectionTestServlet")
 public class DBConnectionTestServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         // Step 1: Set the content type for the response
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -31,6 +32,7 @@ public class DBConnectionTestServlet extends HttpServlet {
             // Step 2: Initialize the DataSource using JNDI (if configured in context.xml)
             Context initContext = new InitialContext();
             DataSource ds = (DataSource) initContext.lookup("java:/comp/env/jdbc/helpdeskDB");
+            DbUtils dbUtils = new DbUtils(ds);
 
             // Step 3: Get a connection from the DataSource
             conn = ds.getConnection();

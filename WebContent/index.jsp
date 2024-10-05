@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,7 +18,7 @@
         <link href="CSS/styles.css" rel="stylesheet" />
     </head>
     <body>
-        <jsp:include page="header.html"/>
+        <jsp:include page="components/header.html"/>
         <!-- Masthead-->
         <header class="masthead">
             <div class="container position-relative">
@@ -74,7 +75,7 @@
         </section>
         <hr>
         
-        <jsp:include page="footer.html"/>
+        <jsp:include page="components/footer.html"/>
        
 
         <!-- Bootstrap core JS-->
@@ -87,4 +88,20 @@
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/DBConnectionTestServlet')
+                .then(response => response.text())
+                .then(data => {
+                    if (!data.includes("Database connected successfully!")) {
+                        alert(data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Error: Failed to connect to the database.");
+                });
+        });
+    </script>
 </html>

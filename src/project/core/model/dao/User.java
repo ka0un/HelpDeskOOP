@@ -1,4 +1,4 @@
-package project;
+package project.core.model.dao;
 
 public class User {
 	private int id;

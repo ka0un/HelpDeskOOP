@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HelpDesk Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/login.css">
+    <link rel="stylesheet" href="../CSS/login.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -80,7 +80,7 @@
     <div class="left-half">
         <div class="login-container">
             <div class="login-logo">
-                <img src="img/login.png" alt="HelpDesk Logo">
+                <img src="../img/login.png" alt="HelpDesk Logo">
             </div>
             <h2>HelpDesk Login</h2>
             <form action="userControllerServlet" method="POST">
@@ -114,7 +114,7 @@
 
     <!-- Right side for image -->
     <div class="right-half">
-        <img src="img/login.svg" alt="Right Side Image">
+        <img src="../img/login.svg" alt="Right Side Image">
     </div>
 </div>
 

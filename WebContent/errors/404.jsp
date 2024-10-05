@@ -82,18 +82,18 @@
     <div class="left-half">
         <div class="error-container">
             <div class="error-logo">
-                <img src="img/error.png" alt="HelpDesk Logo">
+                <img src="../img/error.png" alt="HelpDesk Logo">
             </div>
             <h1>404</h1>
             <h2>Page Not Found</h2>
             <p>Oops! The page you're looking for doesn't exist or has been moved.</p>
-            <a href="index.jsp" class="btn btn-custom">Go to Homepage</a>
+            <a href="../index.jsp" class="btn btn-custom">Go to Homepage</a>
         </div>
     </div>
 
     <!-- Right side for image -->
     <div class="right-half">
-        <img src="img/err.svg" alt="404 Error Illustration">
+        <img src="../img/err.svg" alt="404 Error Illustration">
     </div>
 </div>
 
