@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 
 import project.core.service.interfaces.DatabaseService;
+import project.core.util.Logger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -55,6 +56,8 @@ public class DatabaseServiceImpl implements DatabaseService {
             e.printStackTrace();
             throw new RuntimeException("Failed to initialize database", e);
         }
+
+        Logger.log("Database initialized successfully");
     }
 
     @Override
@@ -63,6 +66,14 @@ public class DatabaseServiceImpl implements DatabaseService {
             return getInstance().dataSource.getConnection();
         } catch (SQLException e) {
             throw new RuntimeException("Failed to get database connection", e);
+        }
+    }
+
+    public String getDatabaseUrl() {
+        try {
+            return getConnection().getMetaData().getURL();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
