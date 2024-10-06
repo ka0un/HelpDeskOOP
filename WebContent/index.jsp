@@ -89,6 +89,7 @@
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 
+<%--    database initializer request--%>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             fetch('/DBConnectionTestServlet')

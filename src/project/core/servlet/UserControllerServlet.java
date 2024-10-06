@@ -63,8 +63,7 @@ public class UserControllerServlet extends HttpServlet {
 		boolean isValidUser = userService.validateUser(email, pw);
 
 		if (isValidUser) {
-			HttpSession session = request.getSession();
-			session.setAttribute("username", email);
+			userService.setSessionUser(request.getSession(), userService.getUser(userService.getUserId(email)));
 			response.sendRedirect("index.jsp");
 		} else {
 			request.setAttribute("errorMessage", "Invalid username or password.");
@@ -81,8 +80,7 @@ public class UserControllerServlet extends HttpServlet {
 		int userId = userService.createAccount(userName, email, password);
 
 		if (userId > 0) {
-			HttpSession session = request.getSession();
-			session.setAttribute("username", email);
+			userService.setSessionUser(request.getSession(), userService.getUser(userId));
 			response.sendRedirect("index.jsp");
 		} else {
 			request.setAttribute("errorMessage", "Account creation failed.");

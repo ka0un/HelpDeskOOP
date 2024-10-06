@@ -2,6 +2,7 @@ package project.core.service.interfaces;
 
 import project.core.model.dao.User;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface UserService {
@@ -15,4 +16,6 @@ public interface UserService {
     void deleteUser(int id) throws Exception;
     void updateUser(User user) throws Exception;
     boolean hasRole(int  userId, String role) throws Exception;
+    void changeRole(int userId, String role) throws Exception;
+    void setSessionUser(HttpSession session, User user) throws Exception;
 }

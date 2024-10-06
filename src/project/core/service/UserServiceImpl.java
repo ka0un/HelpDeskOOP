@@ -4,6 +4,7 @@ import project.core.model.dao.User;
 import project.core.service.interfaces.DatabaseService;
 import project.core.service.interfaces.UserService;
 
+import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -183,6 +184,24 @@ public class UserServiceImpl implements UserService {
                 return resultSet.next();
             }
         }
+    }
+
+    public void changeRole(int userId, String role) throws Exception {
+        String sql = "UPDATE users SET role=? WHERE id=?";
+        try (Connection connection = databaseService.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, role);
+            statement.setInt(2, userId);
+
+            statement.executeUpdate();
+        }
+    }
+
+    public void setSessionUser(HttpSession session, User user) throws Exception {
+        session.setAttribute("email" , user.getEmail());
+        session.setAttribute("userId", user.getId());
+        session.setAttribute("role", user.getRole());
     }
 
 }
