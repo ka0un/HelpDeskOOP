@@ -12,6 +12,7 @@ public class User {
 	private String userName;
 	private String email;
 	private String password;
+	private String role = "user";
 	
 	public User(String email, String password) {
 		super();

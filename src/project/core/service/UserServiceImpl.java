@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new User(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("email"), resultSet.getString("password"));
+                    return new User(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("email"), resultSet.getString("password"), resultSet.getString("role"));
                 } else {
                     return null;
                 }
@@ -134,10 +134,39 @@ public class UserServiceImpl implements UserService {
             try (ResultSet resultSet = statement.executeQuery()) {
                 List<User> users = new ArrayList<>();
                 while (resultSet.next()) {
-                    users.add(new User(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("email"), resultSet.getString("password")));
+                    users.add(new User(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("email"), resultSet.getString("password"), resultSet.getString("role")));
                 }
                 return users;
             }
+        }
+    }
+
+
+    @Override
+    public void deleteUser(int id) throws Exception {
+        String sql = "DELETE FROM users WHERE id=?";
+        try (Connection connection = databaseService.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, id);
+
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void updateUser(User user) throws Exception {
+        String sql = "UPDATE users SET name=?, email=?, password=?, role=? WHERE id=?";
+        try (Connection connection = databaseService.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getRole());
+            statement.setInt(5, user.getId());
+
+            statement.executeUpdate();
         }
     }
 }

@@ -12,4 +12,6 @@ public interface UserService {
     String getUserEmail(int id) throws Exception;
     User getUser(int id) throws Exception;
     List<User> getAllUsers() throws Exception;
+    void deleteUser(int id) throws Exception;
+    void updateUser(User user) throws Exception;
 }
