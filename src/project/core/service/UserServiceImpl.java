@@ -169,4 +169,20 @@ public class UserServiceImpl implements UserService {
             statement.executeUpdate();
         }
     }
+
+    @Override
+    public boolean hasRole(int userId, String role) throws Exception {
+        String sql = "SELECT * FROM users WHERE id=? AND role=?";
+        try (Connection connection = databaseService.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, userId);
+            statement.setString(2, role);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        }
+    }
+
 }

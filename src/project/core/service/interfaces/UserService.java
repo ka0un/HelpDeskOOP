@@ -14,4 +14,5 @@ public interface UserService {
     List<User> getAllUsers() throws Exception;
     void deleteUser(int id) throws Exception;
     void updateUser(User user) throws Exception;
+    boolean hasRole(int  userId, String role) throws Exception;
 }
