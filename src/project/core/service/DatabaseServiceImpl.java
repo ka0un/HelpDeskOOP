@@ -57,7 +57,7 @@ public class DatabaseServiceImpl implements DatabaseService {
             throw new RuntimeException("Failed to initialize database", e);
         }
 
-        Logger.log("Database initialized successfully");
+        Logger.log("Database connection successful");
     }
 
     @Override
