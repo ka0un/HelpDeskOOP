@@ -12,8 +12,11 @@ import project.core.service.interfaces.UserService;
 
 public class CoreAPI {
 
+    @Getter
     private DatabaseService databaseService;
+    @Getter
     private UserService userService;
+    @Getter
     private PermissionRegisterService permissionRegisterService;
 
 

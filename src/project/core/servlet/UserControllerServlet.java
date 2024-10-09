@@ -33,7 +33,16 @@ public class UserControllerServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String theCommand = request.getParameter("command");
+		switch (theCommand) {
+			case "LOGOUT":
+				try {
+					logout(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,8 +62,17 @@ public class UserControllerServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
+			case "LOGOUT":
+				try {
+					logout(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
 		}
 	}
+
+
 
 	private void checkUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String email = request.getParameter("email");
@@ -64,10 +82,10 @@ public class UserControllerServlet extends HttpServlet {
 
 		if (isValidUser) {
 			userService.setSessionUser(request.getSession(), userService.getUser(userService.getUserId(email)));
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("dashboard.jsp");
 		} else {
 			request.setAttribute("errorMessage", "Invalid username or password.");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("account/login.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
@@ -81,11 +99,17 @@ public class UserControllerServlet extends HttpServlet {
 
 		if (userId > 0) {
 			userService.setSessionUser(request.getSession(), userService.getUser(userId));
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("dashboard.jsp");
 		} else {
 			request.setAttribute("errorMessage", "Account creation failed.");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("account/register.jsp");
 			dispatcher.forward(request, response);
 		}
+	}
+
+	private void logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		response.sendRedirect("login.jsp");
 	}
 }

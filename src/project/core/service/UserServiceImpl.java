@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int createAccount(String userName, String email, String password) throws Exception {
-        String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'user')";
         try (Connection connection = databaseService.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -202,6 +202,7 @@ public class UserServiceImpl implements UserService {
         session.setAttribute("email" , user.getEmail());
         session.setAttribute("userId", user.getId());
         session.setAttribute("role", user.getRole());
+        session.setAttribute("user", user);
     }
 
 }
