@@ -16,7 +16,7 @@ public class CoreAPI {
     private UserService userService;
     private PermissionRegisterService permissionRegisterService;
 
-    @Getter
+
     private static CoreAPI instance;
 
     private CoreAPI() {

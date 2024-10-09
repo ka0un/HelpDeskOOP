@@ -34,7 +34,7 @@ rem Create a list of all Java files
 dir /s /b "%SRC_DIR%\*.java" > javafiles.txt
 
 rem Compile all Java files
-javac -cp "%CLASSPATH%" -d "%CLASSES_DIR%" @javafiles.txt
+javac --release 16 -cp "%CLASSPATH%" -d "%CLASSES_DIR%" @javafiles.txt
 
 if %errorlevel% neq 0 (
     echo Compilation failed. Please check the error messages above.
