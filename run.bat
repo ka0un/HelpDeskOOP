@@ -51,21 +51,4 @@ docker run -d -p 8080:8080 helpdeskoop:latest
 
 echo Build and deployment completed successfully.
 del javafiles.txt
-
-for /f "tokens=*" %%i in ('docker ps --format "{{.Ports}}"') do (
-    echo Checking ports: %%i
-    echo %%i | find "0.0.0.0:8080->8080/tcp" >nul
-    if %ERRORLEVEL%==0 (
-        set "portFound=true"
-        echo [32m Success: Port 8080 is up and running on 0.0.0.0:8080 [0m
-    )
-)
-
-:: If the port wasn't found, print an error message
-if "%portFound%"=="false" (
-    color 0C
-    echo [31m Something went wrong: Port 8080 is not running. [0m
-)
-
-echo.
 pause
