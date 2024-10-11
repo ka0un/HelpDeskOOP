@@ -35,5 +35,23 @@ public class CoreAPI {
         return instance;
     }
 
+	public DatabaseService getDatabaseService() {
+		return databaseService;
+	}
+
+	
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	
+
+	public PermissionRegisterService getPermissionRegisterService() {
+		return permissionRegisterService;
+	}
+
+	
+
 
 }
