@@ -110,6 +110,6 @@ public class UserControllerServlet extends HttpServlet {
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("index.jsp");
 	}
 }

@@ -1,3 +1,15 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="project.core.api.CoreAPI" %>
+<%
+    HttpSession session1 = request.getSession(false);
+    CoreAPI coreAPI = CoreAPI.getInstance();
+
+    if (CoreAPI.getInstance().isUserLoggedIn(session1)) {
+        response.sendRedirect("../dashboard.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

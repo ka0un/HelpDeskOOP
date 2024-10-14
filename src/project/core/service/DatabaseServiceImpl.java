@@ -46,7 +46,10 @@ public class DatabaseServiceImpl implements DatabaseService {
                 + "email VARCHAR(255) NOT NULL, "
                 + "password VARCHAR(255) NOT NULL," +
                 "role VARCHAR(255) NOT NULL"
-                + ");";
+                + ");" +
+                "INSERT INTO users (id, name, email, password, role) \n" +
+                "SELECT 9999, 'admin', 'admin@admin.com', 'admin', 'admin' \n" +
+                "WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = 9999);";
 
         try (Connection connection = getInstance().getConnection();
              Statement statement = connection.createStatement()) {

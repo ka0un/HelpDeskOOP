@@ -1,4 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="project.core.api.CoreAPI" %>
+<%
+  HttpSession session1 = request.getSession(false);
+  CoreAPI coreAPI = CoreAPI.getInstance();
+  int userId = (int) session1.getAttribute("userId");
+
+  if (!CoreAPI.getInstance().isUserLoggedIn(session1)) {
+    response.sendRedirect("login.jsp");
+    return;
+  }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +22,18 @@
   <title>Open Help Desk | Admin Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+
+
+
+    body{margin-top:20px;
+      background:#eee;
+    }
+    #page-wrapper {
+      padding: 15px 25px;
+    }
+  </style>
+
   <style type="text/css">
     body{
       background:#f4f3ef;
@@ -186,27 +212,14 @@
           Open Help Desk
         </a>
       </li>
-      <li>
+      <li class="active">
         <a href="#">Dashboard</a>
       </li>
+      <% if (coreAPI.getPermissionRegisterService().hasPermission(userId, "view_tickets")) { %>
       <li>
-        <a href="#">Shortcuts</a>
+        <a href="admin_tickets.jsp">Tickets</a>
       </li>
-      <li>
-        <a href="#">Overview</a>
-      </li>
-      <li>
-        <a href="#">Events</a>
-      </li>
-      <li class="active">
-        <a href="#">About</a>
-      </li>
-      <li>
-        <a href="#">Services</a>
-      </li>
-      <li>
-        <a href="#">Contact</a>
-      </li>
+      <% } %>
     </ul>
   </div>
   <div id="page-content-wrapper">
@@ -220,7 +233,7 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="/UserControllerServlet?command=LOGOUT" class="dropdown-toggle" data-toggle="dropdown">
+              <a href="${pageContext.request.contextPath}/UserControllerServlet?command=LOGOUT" >
                 <i class="ti-panel"></i>
                 <p>Logout</p>
               </a>
@@ -232,9 +245,140 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
-          <h1>Sidebar Menu</h1>
 
-          <!-- Insert Your Shit Here -->
+
+          <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+          <div id="page-wrapper" class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <h1>Dashboard <small>Statistics Overview</small></h1>
+                <ol class="breadcrumb">
+                  <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
+                </ol>
+                <div class="alert alert-success alert-dismissable">
+                  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                  Reminder to logout from the dashboard when you are done.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <i class="fa fa-users fa-5x"></i>
+                      </div>
+                      <div class="col-xs-6 text-right">
+                        <p class="announcement-heading">1</p>
+                        <p class="announcement-text">Users</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#">
+                    <div class="panel-footer announcement-bottom">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          View
+                        </div>
+                        <div class="col-xs-6 text-right">
+                          <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="panel panel-warning">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <i class="fa fa-comments fa-5x"></i>
+                      </div>
+                      <div class="col-xs-6 text-right">
+                        <p class="announcement-heading">12</p>
+                        <p class="announcement-text">Tickets</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="admin_tickets.jsp">
+                    <div class="panel-footer announcement-bottom">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          View
+                        </div>
+                        <div class="col-xs-6 text-right">
+                          <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <i class="fa fa-tasks fa-5x"></i>
+                      </div>
+                      <div class="col-xs-6 text-right">
+                        <p class="announcement-heading">18</p>
+                        <p class="announcement-text">Crawl Errors</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#">
+                    <div class="panel-footer announcement-bottom">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          View
+                        </div>
+                        <div class="col-xs-6 text-right">
+                          <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="panel panel-success">
+                  <div class="panel-heading">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <i class="fa fa-check fa-5x"></i>
+                      </div>
+                      <div class="col-xs-6 text-right">
+                        <p class="announcement-heading">56</p>
+                        <p class="announcement-text">New Orders!</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#">
+                    <div class="panel-footer announcement-bottom">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          View
+                        </div>
+                        <div class="col-xs-6 text-right">
+                          <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+          <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+          <script type="text/javascript">
+
+
+          </script>
+
 
         </div>
       </div>
