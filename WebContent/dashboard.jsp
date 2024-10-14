@@ -2,186 +2,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="Admin Dashboard" />
-  <meta name="author" content="" />
-  <title>Admin Dashboard</title>
-  <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <!-- Bootstrap icons-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-  <!-- Google fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-  <!-- Core theme CSS (includes Bootstrap)-->
-  <link href="CSS/styles.css" rel="stylesheet" />
-  <style>
-    /* Custom styles for the sidebar */
-    .sidebar {
+  <meta charset="utf-8">
+
+
+  <title>Open Help Desk | Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+    body{
+      background:#f4f3ef;
+    }
+
+    #wrapper {
+      padding-left: 0;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+    }
+
+    #wrapper.toggled {
+      padding-left: 250px;
+    }
+
+    #sidebar-wrapper {
+      z-index: 1000;
       position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 100;
-      padding: 48px 0 0;
-      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-    }
-    .sidebar-sticky {
-      position: relative;
-      top: 0;
-      height: calc(100vh - 48px);
-      padding-top: .5rem;
-      overflow-x: hidden;
+      left: 250px;
+      width: 0;
+      height: 100%;
+      margin-left: -250px;
       overflow-y: auto;
-    }
-    .sidebar .nav-link {
-      font-weight: 500;
-      color: #333;
-    }
-    .sidebar .nav-link.active {
-      color: #007bff;
-    }
-    /* Adjust main content area */
-    .main-content {
-      margin-left: 200px; /* Adjust based on sidebar width */
+      background:#fff;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
     }
 
-    .nav-item {
-      padding: 0.3rem 0.3rem;
+    #sidebar-wrapper {
+      box-shadow: inset -1px 0px 0px 0px #DDDDDD;
     }
 
+    #wrapper.toggled #sidebar-wrapper {
+      width: 250px;
+    }
+
+    #page-content-wrapper {
+      width: 100%;
+      position: absolute;
+      padding: 15px;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+      position: absolute;
+      margin-right: -250px;
+    }
+
+    /* Sidebar Styles */
+
+    .sidebar-nav {
+      position: absolute;
+      top: 0;
+      width: 250px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      text-indent: 20px;
+      line-height: 40px;
+    }
+
+    .sidebar-nav li a {
+      display: block;
+      text-decoration: none;
+      color: #999999;
+    }
+
+    .sidebar-nav li a:hover {
+      text-decoration: none;
+    }
+
+    .sidebar-nav li a:active,
+    .sidebar-nav li a:focus {
+      text-decoration: none;
+    }
+
+    .sidebar-nav > .sidebar-brand {
+      height: 65px;
+      font-size: 18px;
+      line-height: 60px;
+    }
+
+    .sidebar-nav > .sidebar-brand a {
+      color: #999999;
+    }
+
+    .sidebar-nav > .sidebar-brand a:hover {
+      color: #fff;
+      background: none;
+    }
+
+    @media(min-width:768px) {
+      #wrapper {
+        padding-left: 250px;
+      }
+
+      #wrapper.toggled {
+        padding-left: 0;
+      }
+
+      #sidebar-wrapper {
+        width: 250px;
+      }
+
+      #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+      }
+
+      #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+      }
+
+      #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+      }
+    }
+
+    #sidebar-wrapper li.active > a:after {
+      border-right: 17px solid #f4f3ef;
+      border-top: 17px solid transparent;
+      border-bottom: 17px solid transparent;
+      content: "";
+      display: inline-block;
+      position: absolute;
+      right: -1px;
+    }
+
+    .sidebar-brand {
+      border-bottom: 1px solid rgba(102, 97, 91, 0.3);
+    }
+
+    .sidebar-brand {
+      padding: 18px 0px;
+      margin: 0 20px;
+    }
+
+    .navbar .navbar-nav > li > a p {
+      display: inline-block;
+      margin: 0;
+    }
+    p {
+      font-size: 16px;
+      line-height: 1.4em;
+    }
+
+    .navbar-default {
+      background-color: #f4f3ef;
+      border:0px;
+      border-bottom: 1px solid #DDDDDD;
+    }
+
+    btn-menu {
+      border-radius: 3px;
+      padding: 4px 12px;
+      margin: 14px 5px 5px 20px;
+      font-size: 14px;
+      float: left;
+    }
   </style>
 </head>
 <body>
-<!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Open HelpDesk</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/UserControllerServlet?command=LOGOUT"><i class="bi bi-box-arrow-right"></i> Logout</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Sidebar -->
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-  <div class="position-sticky pt-3 sidebar-sticky">
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link active" href="#">
-          <i class="bi bi-speedometer2"></i> Dashboard
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div id="wrapper" class="wrapper-content">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+        <a href="#">
+          Open Help Desk
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-people"></i> Users
-        </a>
+      <li>
+        <a href="#">Dashboard</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-ticket"></i> Tickets
-        </a>
+      <li>
+        <a href="#">Shortcuts</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-file-earmark-text"></i> Knowledge Base
-        </a>
+      <li>
+        <a href="#">Overview</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-chat-dots"></i> Forum Management
-        </a>
+      <li>
+        <a href="#">Events</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="bi bi-gear"></i> Settings
-        </a>
+      <li class="active">
+        <a href="#">About</a>
+      </li>
+      <li>
+        <a href="#">Services</a>
+      </li>
+      <li>
+        <a href="#">Contact</a>
       </li>
     </ul>
   </div>
-</nav>
-
-<!-- Main content -->
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Dashboard</h1>
-  </div>
-
-  <!-- Dashboard content -->
-  <div class="row">
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Total Users</h5>
-          <p class="card-text display-4">1,234</p>
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="btn-menu btn btn-success btn-toggle-menu" type="button">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/UserControllerServlet?command=LOGOUT" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="ti-panel"></i>
+                <p>Logout</p>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Open Tickets</h5>
-          <p class="card-text display-4">42</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Knowledge Base Articles</h5>
-          <p class="card-text display-4">567</p>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1>Sidebar Menu</h1>
+
+          <!-- Insert Your Shit Here -->
+
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Recent activity table -->
-  <h2>Recent Activity</h2>
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">User</th>
-        <th scope="col">Action</th>
-        <th scope="col">Date</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>1</td>
-        <td>John Doe</td>
-        <td>Created a new ticket</td>
-        <td>2024-10-09</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Jane Smith</td>
-        <td>Updated knowledge base article</td>
-        <td>2024-10-08</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Bob Johnson</td>
-        <td>Replied to forum thread</td>
-        <td>2024-10-07</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</main>
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
 
 
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+
+
+  $(function(){
+    $(".btn-toggle-menu").click(function() {
+      $("#wrapper").toggleClass("toggled");
+    });
+  })
+</script>
 </body>
 </html>

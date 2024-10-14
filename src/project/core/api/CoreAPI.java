@@ -1,7 +1,6 @@
 package project.core.api;
 
-import lombok.Data;
-import lombok.Getter;
+
 import project.core.service.DatabaseServiceImpl;
 import project.core.service.PermissionRegisterServiceImpl;
 import project.core.service.UserServiceImpl;
@@ -12,11 +11,11 @@ import project.core.service.interfaces.UserService;
 
 public class CoreAPI {
 
-    @Getter
+
     private DatabaseService databaseService;
-    @Getter
+
     private UserService userService;
-    @Getter
+
     private PermissionRegisterService permissionRegisterService;
 
 
