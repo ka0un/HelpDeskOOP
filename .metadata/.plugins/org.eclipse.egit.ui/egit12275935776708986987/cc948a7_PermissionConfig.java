@@ -12,6 +12,6 @@ public class PermissionConfig {
         // Add necessary permissions for tickets feature
         permissionService.addPermission("admin", "view_tickets");
         permissionService.addPermission("user", "view_tickets");
-
+//kavind
     }
 }
