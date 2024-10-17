@@ -46,6 +46,9 @@ public class TicketController extends HttpServlet {
                 case "deleteTicket":
                     deleteTicket(request, response);
                     break;
+                case "getMessagesText":
+                    getMessagesText(request, response);
+                    break;
                 default:
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
             }
@@ -80,6 +83,25 @@ public class TicketController extends HttpServlet {
         } catch (SQLException e) {
             throw new ServletException(e);
         }
+    }
+
+    private  void getMessagesText(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int ticketId = Integer.parseInt(request.getParameter("ticketId"));
+        List<Message> messages = ticketService.getMessagesForTicket(ticketId);
+        response.setContentType("application/json");
+        StringBuilder messagesBuilder = new StringBuilder();
+        messagesBuilder.append("[");
+        for (Message message : messages) {
+            messagesBuilder.append("{");
+            messagesBuilder.append("\"id\":").append(message.getId()).append(",");
+            messagesBuilder.append("\"ticketId\":").append(message.getTicketId()).append(",");
+            messagesBuilder.append("\"senderId\":").append(message.getSenderId()).append(",");
+            messagesBuilder.append("\"message\":\"").append(message.getMessage()).append("\",");
+            messagesBuilder.append("\"sentTime\":\"").append(message.getSentTime()).append("\",");
+            messagesBuilder.append("\"senderAdmin\":").append(message.isSenderAdmin());
+            messagesBuilder.append("},");
+        }
+        response.getWriter().write(messagesBuilder.substring(0, messagesBuilder.length() - 1) + "]");
     }
 
     private void markAsResolved(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {

@@ -563,6 +563,7 @@
     </div>
 </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -576,5 +577,23 @@
         });
     })
 </script>
+        <script type="text/javascript">
+            function fetchMessages() {
+                const ticketId = new URLSearchParams(window.location.search).get('ticketId');
+                fetch(`/ticketController?action=getMessagesText&ticketId=<%=ticketId%>`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const previousMessages = JSON.parse(sessionStorage.getItem('previousMessages') || '[]');
+                        if (JSON.stringify(data) !== JSON.stringify(previousMessages)) {
+                            sessionStorage.setItem('previousMessages', JSON.stringify(data));
+                            window.location.href = `/ticketController?action=getMessages&ticketId=<%=ticketId%>`;
+                        }
+                    })
+                    .catch(error => console.error('Error fetching messages:', error));
+            }
+
+            // Poll every 5 seconds
+            setInterval(fetchMessages, 1000);
+        </script>
 </body>
 </html>
