@@ -49,7 +49,17 @@ public class DatabaseServiceImpl implements DatabaseService {
                 + ");" +
                 "INSERT INTO users (id, name, email, password, role) \n" +
                 "SELECT 9999, 'admin', 'admin@admin.com', 'admin', 'admin' \n" +
-                "WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = 9999);";
+                "WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = 9999);" + "CREATE TABLE IF NOT EXISTS video_tutorials (\r\n"
+                		+ "    Id INT NOT NULL AUTO_INCREMENT,\r\n"
+                		+ "    Title VARCHAR(255) NOT NULL,\r\n"
+                		+ "    YoutubeUrl VARCHAR(255) NOT NULL,\r\n"
+                		+ "    Views INT DEFAULT 0,\r\n"
+                		+ "    UploadDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\r\n"
+                		+ "    Category VARCHAR(100),\r\n"
+                		+ "    Type VARCHAR(10) DEFAULT 'enable',\r\n"
+                		+ "    PRIMARY KEY (Id)\r\n"
+                		+ ");\r\n"
+                		+ "";
 
         try (Connection connection = getInstance().getConnection();
              Statement statement = connection.createStatement()) {

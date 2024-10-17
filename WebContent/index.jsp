@@ -57,7 +57,7 @@
                     <div class="col-lg-3">
                         <div class="features-icons-item mx-auto mb-0 mb-lg-3">
                             <div class="features-icons-icon d-flex"><i class=" bi-file-earmark-play m-auto text-primary"></i></div>
-                            <h3>Video Tutorials</h3>
+                            <a href = "tutorials.jsp"> <h3>Video Tutorials</h3> </a>
                             
                         </div>
                     </div>

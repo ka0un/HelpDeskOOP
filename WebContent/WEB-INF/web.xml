@@ -41,4 +41,42 @@
     <url-pattern>/UserControllerServlet</url-pattern>
   </servlet-mapping>
 
+
+  <servlet>
+	<servlet-name>updateVideo</servlet-name>
+	<servlet-class> project.features.VideoTutorials.UpdateVideoServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+	<servlet-name>updateVideo</servlet-name>
+	<url-pattern>/updateVideo</url-pattern>
+</servlet-mapping>
+	
+ <servlet>
+    <servlet-name>insertVideo</servlet-name>
+    <servlet-class> project.features.VideoTutorials.InsertVideoServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+    	<servlet-name>insertVideo</servlet-name>
+    	<url-pattern>/insertVideo</url-pattern>
+ </servlet-mapping>
+
+  <servlet>
+	<servlet-name>deleteVideo</servlet-name>
+	<servlet-class> project.features.VideoTutorials.DeleteVideoServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>deleteVideo</servlet-name>
+	<url-pattern>/deleteVideo</url-pattern>
+</servlet-mapping>
+	
+
+
+
+
+
+
+
+
+
 </web-app>
