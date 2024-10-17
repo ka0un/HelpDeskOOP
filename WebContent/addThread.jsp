@@ -258,9 +258,43 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
-          <h1>Sidebar Menu</h1>
+        
 
-          <!-- Insert Your Shit Here -->
+         
+	<h1>CREATE NEW THREAD</h1>
+	<div class="addThreadDiv">
+	<form action="threadControllerServlet" method="post">
+	
+	<input type="hidden" name="command" value="ADD">
+	
+  <div class="form-group">
+    <label for="exampleInputEmail1">Title</label>
+    <input type="text" name="threadName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter title">
+  </div>
+  
+  <div class="form-group">
+      <label for="exampleInputEmail1">Thread Content</label><br>
+      <textarea rows="10" cols="170" name="content"></textarea>
+  </div>
+  
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">I agree to terms and conditions</label>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<br><br>
+
+<div style="clear:both;">
+	<p>
+		<a href="threadOptions.jsp">Back to list</a>
+	</p>
+</div>
+	
+	
+	</div>
 
         </div>
       </div>
