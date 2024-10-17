@@ -217,7 +217,7 @@
       </li>
       <% if (coreAPI.getPermissionRegisterService().hasPermission(userId, "view_tickets")) { %>
       <li>
-        <a href="admin_tickets.jsp">Tickets</a>
+        <a href="TicketController?action=getAllTickets">Tickets</a>
       </li>
       <% } %>
     </ul>
@@ -302,7 +302,7 @@
                       </div>
                     </div>
                   </div>
-                  <a href="admin_tickets.jsp">
+                  <a href="TicketController?action=getAllTickets">
                     <div class="panel-footer announcement-bottom">
                       <div class="row">
                         <div class="col-xs-6">

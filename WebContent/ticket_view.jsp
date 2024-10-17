@@ -9,6 +9,11 @@
 
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="project.core.api.CoreAPI" %>
+<%@ page import="project.features.tickets.model.dao.Message" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="project.features.tickets.service.interfaces.TicketService" %>
+<%@ page import="project.features.tickets.service.TicketServiceImpl" %>
 <%
     HttpSession session1 = request.getSession(false);
     CoreAPI coreAPI = CoreAPI.getInstance();
@@ -417,6 +422,12 @@
 </head>
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<%
+    int ticketId = Integer.parseInt(request.getParameter("ticketId"));
+    List<Message> messages = (List<Message>) request.getAttribute("messages");
+    %>
+
 <div id="wrapper" class="wrapper-content">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
@@ -430,7 +441,7 @@
             </li>
             <% if (coreAPI.getPermissionRegisterService().hasPermission(userId, "view_tickets")) { %>
             <li class="active">
-                <a href="admin_tickets.jsp">Tickets</a>
+                <a href="TicketController?action=getAllTickets">Tickets</a>
             </li>
             <% } %>
         </ul>
@@ -469,116 +480,69 @@
                                     <i class="fa fa-bars"></i>
                                 </div>
                                 <div class="pull-left hidden-xs">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt class="img-avatar m-r-10">
+<%--                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt class="img-avatar m-r-10">--%>
                                     <div class="lv-avatar pull-left">
                                     </div>
-                                    <span>David Parbell</span>
+                <% TicketService ticketService = new TicketServiceImpl();
+                    String ticketTitle = ticketService.getTicketById(ticketId).getTitle();
+                %>
+                                        <%=ticketTitle%></span>
                                 </div>
                                 <ul class="ah-actions actions">
                                     <li>
-                                        <a href>
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href>
+                                        <a href="TicketController?action=markAsResolved&ticketId=<%=ticketId%>" onclick="return confirm('Are you sure you want to mark this ticket as resolved?');">
                                             <i class="fa fa-check"></i>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href>
-                                            <i class="fa fa-clock-o"></i>
+                                        <a href="TicketController?action=deleteTicket&ticketId=<%=ticketId%>" onclick="return confirm('Are you sure you want to delete this ticket?');">
+                                            <i class="fa fa-trash"></i>
                                         </a>
                                     </li>
-                                    <li class="dropdown">
-                                        <a href data-toggle="dropdown" aria-expanded="true">
-                                            <i class="fa fa-sort"></i>
+                                    <li>
+                                        <a href ="TicketController?action=getMessages&ticketId=<%=ticketId%>">
+                                            <i class="fa fa-rotate-right"></i>
                                         </a>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li>
-                                                <a href>Latest</a>
-                                            </li>
-                                            <li>
-                                                <a href>Oldest</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href data-toggle="dropdown" aria-expanded="true">
-                                            <i class="fa fa-bars"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li>
-                                                <a href>Refresh</a>
-                                            </li>
-                                            <li>
-                                                <a href>Message Settings</a>
-                                            </li>
-                                        </ul>
                                     </li>
                                 </ul>
                             </div>
+                            <%
+                                for (Message message : messages) {
+                                    boolean isSender = message.getSenderId() == userId;
+
+                            %>
                             <div class="message-feed media">
+
+                                <% if (isSender) { %>
                                 <div class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt class="img-avatar">
-                                </div>
-                                <div class="media-body">
-                                    <div class="mf-content">
-                                        Quisque consequat arcu eget odio cursus, ut tempor arcu vestibulum. Etiam ex arcu, porta a urna non, lacinia pellentesque orci. Proin semper sagittis erat, eget condimentum sapien viverra et. Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis mi. In eu massa a sem pulvinar lobortis.
+                                    <% } else { %>
+                                    <div class="pull-right">
+                                        <% } %>
+
+                                        <img src="https://api.dicebear.com/9.x/initials/svg?seed=<%=CoreAPI.getInstance().getUserService().getUser(message.getSenderId()).getUserName()%>" alt class="img-avatar">
+
                                     </div>
-                                    <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 09:00</small>
-                                </div>
-                            </div>
-                            <div class="message-feed right">
-                                <div class="pull-right">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt class="img-avatar">
-                                </div>
-                                <div class="media-body">
-                                    <div class="mf-content">
-                                        Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis mi. In eu massa a sem pulvinar lobortis.
+                                    <div class="media-body">
+                                        <div class="mf-content">
+                                            <%=message.getMessage()%>
+                                        </div>
+                                        <small class="mf-date"><i class="fa fa-clock-o"></i> <%=message.getSentTime().toLocalDateTime().toString()%></small>
                                     </div>
-                                    <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 09:30</small>
                                 </div>
-                            </div>
-                            <div class="message-feed media">
-                                <div class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt class="img-avatar">
+                                <% } %>
+
+                                <% if (!ticketService.getTicketById(ticketId).isClosed()) { %>
+                                <div class="msb-reply">
+                                    <form action="TicketController" method="post">
+                                        <input type="hidden" name="action" value="addMessage">
+                                        <input type="hidden" name="ticketId" value="<%= ticketId %>">
+                                        <input type="hidden" name="senderId" value="<%= userId %>">
+                                        <input type="hidden" name="isSenderAdmin" value="<%= CoreAPI.getInstance().getUserService().getUser(userId).getRole().equalsIgnoreCase("admin")%>">
+                                        <textarea name="message" placeholder="What's on your mind..."></textarea>
+                                        <button type="submit"><i class="fa fa-paper-plane-o"></i></button>
+                                    </form>
                                 </div>
-                                <div class="media-body">
-                                    <div class="mf-content">
-                                        Etiam ex arcumentum
-                                    </div>
-                                    <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 09:33</small>
-                                </div>
-                            </div>
-                            <div class="message-feed right">
-                                <div class="pull-right">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt class="img-avatar">
-                                </div>
-                                <div class="media-body">
-                                    <div class="mf-content">
-                                        Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    </div>
-                                    <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:10</small>
-                                </div>
-                            </div>
-                            <div class="message-feed media">
-                                <div class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt class="img-avatar">
-                                </div>
-                                <div class="media-body">
-                                    <div class="mf-content">
-                                        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae rhoncus sapien volutpat eget
-                                    </div>
-                                    <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 10:24</small>
-                                </div>
-                            </div>
-                            <div class="msb-reply">
-                                <textarea placeholder="What's on your mind..."></textarea>
-                                <button><i class="fa fa-paper-plane-o"></i></button>
-                            </div>
-                        </div>
-                    </div>
+                                <% } %>
                 </div>
                 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
                 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

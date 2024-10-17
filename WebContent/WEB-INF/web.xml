@@ -41,4 +41,14 @@
     <url-pattern>/UserControllerServlet</url-pattern>
   </servlet-mapping>
 
+    <servlet>
+        <servlet-name>TicketController</servlet-name>
+        <servlet-class>project.features.tickets.controllers.TicketController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TicketController</servlet-name>
+        <url-pattern>/TicketController</url-pattern>
+    </servlet-mapping>
+
 </web-app>

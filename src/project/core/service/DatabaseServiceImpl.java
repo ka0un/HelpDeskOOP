@@ -49,7 +49,28 @@ public class DatabaseServiceImpl implements DatabaseService {
                 + ");" +
                 "INSERT INTO users (id, name, email, password, role) \n" +
                 "SELECT 9999, 'admin', 'admin@admin.com', 'admin', 'admin' \n" +
-                "WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = 9999);";
+                "WHERE NOT EXISTS (SELECT 1 FROM users WHERE id = 9999);" +
+                " " +
+                "CREATE TABLE IF NOT EXISTS tickets (\n" +
+                "    id INT AUTO_INCREMENT PRIMARY KEY,\n" +
+                "    userId INT NOT NULL,\n" +
+                "    title VARCHAR(255) NOT NULL,\n" +
+                "    description TEXT NOT NULL,\n" +
+                "    isClosed BOOLEAN NOT NULL,\n" +
+                "    isDeleted BOOLEAN NOT NULL,\n" +
+                "    createdDate TIMESTAMP NOT NULL,\n" +
+                "    closedDate TIMESTAMP,\n" +
+                "    updatedDate TIMESTAMP,\n" +
+                "    isNew BOOLEAN NOT NULL\n" +
+                ");" +
+                "CREATE TABLE IF NOT EXISTS messages (\n" +
+                "    id INT AUTO_INCREMENT PRIMARY KEY,\n" +
+                "    ticketId INT NOT NULL,\n" +
+                "    senderId INT NOT NULL,\n" +
+                "    message TEXT NOT NULL,\n" +
+                "    sentTime TIMESTAMP NOT NULL,\n" +
+                "    isSenderAdmin BOOLEAN NOT NULL\n" +
+                ");" ;
 
         try (Connection connection = getInstance().getConnection();
              Statement statement = connection.createStatement()) {
