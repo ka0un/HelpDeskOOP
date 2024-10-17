@@ -579,10 +579,12 @@
                                                 <div class="modal-wrapper">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
+                                                            <% if (CoreAPI.getInstance().getPermissionRegisterService().hasPermission(session1.getId(), "create_ticket")) { %>
                                                             <div class="modal-header bg-blue">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                                 <h4 class="modal-title"><i class="fa fa-pencil"></i> Create New Ticket</h4>
                                                             </div>
+                                                            <% } %>
                                                             <form action="${pageContext.request.contextPath}/TicketController" method="post">
                                                                 <div class="modal-body">
                                                                     <input name = "action" type="hidden" value="createTicket">

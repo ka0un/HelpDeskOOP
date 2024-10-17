@@ -45,7 +45,7 @@ public class CoreAPI {
 
         String userId = session.getAttribute("userId").toString();
         UserService userService = new UserServiceImpl();
-        return permissionRegisterService.hasPermission(Integer.parseInt(userId), permission);
+        return permissionRegisterService.hasPermission((int) Integer.parseInt(userId), permission);
     }
 
     public boolean isUserLoggedIn(HttpSession session) {

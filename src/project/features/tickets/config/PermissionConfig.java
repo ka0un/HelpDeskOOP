@@ -13,5 +13,8 @@ public class PermissionConfig {
         permissionService.addPermission("admin", "view_tickets");
         permissionService.addPermission("user", "view_tickets");
 
+        permissionService.addPermission("admin", "ticket_admin_controls");
+        permissionService.addPermission("user", "create_ticket");
+
     }
 }

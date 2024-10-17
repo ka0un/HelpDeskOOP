@@ -489,6 +489,7 @@
                                         <%=ticketTitle%></span>
                                 </div>
                                 <ul class="ah-actions actions">
+                                    <% if (CoreAPI.getInstance().getPermissionRegisterService().hasPermission(userId, "ticket_admin_controls")) { %>
                                     <li>
                                         <a href="TicketController?action=markAsResolved&ticketId=<%=ticketId%>" onclick="return confirm('Are you sure you want to mark this ticket as resolved?');">
                                             <i class="fa fa-check"></i>
@@ -499,6 +500,7 @@
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </li>
+                                    <%} %>
                                     <li>
                                         <a href ="TicketController?action=getMessages&ticketId=<%=ticketId%>">
                                             <i class="fa fa-rotate-right"></i>
@@ -511,15 +513,12 @@
                                     boolean isSender = message.getSenderId() == userId;
 
                             %>
-                            <div class="message-feed media">
+                            <div class="message-feed <%=(isSender) ? "media" : "right"%>">
 
                                 <% if (isSender) { %>
-                                <div class="pull-left">
-                                    <% } else { %>
-                                    <div class="pull-right">
-                                        <% } %>
+                                <div class="pull-left"><% } else { %><div class="pull-right"><% } %>
 
-                                        <img src="https://api.dicebear.com/9.x/initials/svg?seed=<%=CoreAPI.getInstance().getUserService().getUser(message.getSenderId()).getUserName()%>" alt class="img-avatar">
+                                    <img src="https://api.dicebear.com/9.x/initials/svg?seed=<%=CoreAPI.getInstance().getUserService().getUser(message.getSenderId()).getUserName()%>" alt class="img-avatar">
 
                                     </div>
                                     <div class="media-body">

@@ -5,18 +5,17 @@ import project.core.model.dao.User;
 import project.core.service.interfaces.PermissionRegisterService;
 import project.core.service.interfaces.UserService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PermissionRegisterServiceImpl implements PermissionRegisterService {
 
     UserService userService;
-    private static HashMap<String, String> permissions = new HashMap<>();
+    private static ConcurrentHashMap<String, List<String>> permissions = new ConcurrentHashMap<>();
 
     static{
         //default permissions configuration
-        permissions.put("admin", "admin");
+        permissions.put("admin", List.of("admin"));
     }
 
     public PermissionRegisterServiceImpl(UserService userService) {
@@ -26,7 +25,15 @@ public class PermissionRegisterServiceImpl implements PermissionRegisterService 
 
     @Override
     public void addPermission(String role, String permission) {
-        permissions.put(role, permission);
+        if (permissions.containsKey(role)) {
+            List<String> perms = permissions.get(role);
+            perms = new ArrayList<>(perms); // Ensure the list is mutable
+            perms.add(permission);
+            permissions.put(role, perms);
+            return;
+        }
+
+        permissions.put(role, new ArrayList<>(List.of(permission))); // Use mutable list
     }
 
     @Override
@@ -36,19 +43,6 @@ public class PermissionRegisterServiceImpl implements PermissionRegisterService 
         }
     }
 
-    @Override
-    public List<String> getPermissions(String role) {
-
-        List<String> perms = new ArrayList<>();
-
-        for (String key : permissions.keySet()) {
-            if (key.equals(role)) {
-                perms.add(permissions.get(key));
-            }
-        }
-
-        return perms;
-    }
 
     @Override
     public List<String> getRoles(String permission) {
@@ -67,8 +61,10 @@ public class PermissionRegisterServiceImpl implements PermissionRegisterService 
     @Override
     public boolean hasPermission(String role, String permission) {
         for (String key : permissions.keySet()) {
-            if (key.equals(role) && permissions.get(key).equals(permission)) {
-                return true;
+            for (String perm : permissions.get(key)) {
+                if (key.equals(role) && perm.equalsIgnoreCase(permission)) {
+                    return true;
+                }
             }
         }
         return false;

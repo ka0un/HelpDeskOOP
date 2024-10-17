@@ -1,5 +1,6 @@
 package project.features.tickets.controllers;
 
+import project.core.api.CoreAPI;
 import project.features.tickets.model.dao.Message;
 import project.features.tickets.model.dao.Ticket;
 import project.features.tickets.service.TicketServiceImpl;
@@ -103,7 +104,7 @@ public class TicketController extends HttpServlet {
         ticketService.createTicket(ticket);
         int createdTicketId = ticketService.getAllTickets().stream().mapToInt(Ticket::getId).max().orElse(0);
         ticketService.addMessageToTicket(new Message(0, createdTicketId, ticket.getUserId(), ticket.getDescription(), new Timestamp(System.currentTimeMillis()), false));
-        response.sendRedirect("TicketController?action=getAllTickets");
+        response.sendRedirect("TicketController?action=getMessages&ticketId=" + createdTicketId);
     }
 
     private void getTicket(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -119,6 +120,18 @@ public class TicketController extends HttpServlet {
 
     private void getAllTickets(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         List<Ticket> tickets = ticketService.getAllTickets();
+
+        //get the user id from the session
+        int userId = (int) request.getSession().getAttribute("userId");
+
+        //check if user is admin
+        boolean isAmdin =  CoreAPI.getInstance().getPermissionRegisterService().hasPermission(userId, "admin");
+
+        //filter tickets based on user id
+        if (!isAmdin) {
+            tickets = tickets.stream().filter(ticket -> ticket.getUserId() == userId).toList();
+        }
+
         request.setAttribute("tickets", tickets);
         request.setAttribute("openTickets", ticketService.getAllTickets().stream().filter(ticket -> !ticket.isClosed()).count());
         request.setAttribute("closedTickets", ticketService.getAllTickets().stream().filter(Ticket::isClosed).count());
